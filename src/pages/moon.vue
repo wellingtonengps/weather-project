@@ -1,5 +1,5 @@
 <template>
-  <Weather />
+  <Moon />
 </template>
 
 <script lang="ts" setup>
