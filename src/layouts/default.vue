@@ -2,8 +2,10 @@
   <v-app>
     <View />
   </v-app>
-
-  <AppFooter />
 </template>
+
+<script lang="ts" setup>
+import View from "./view.vue";
+</script>
 
 <script lang="ts" setup></script>
