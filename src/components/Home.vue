@@ -1,5 +1,5 @@
 <template>
-  <v-btn stacked variant="text" class="custom-btn">
+  <v-btn stacked variant="text" class="custom-btn" @click="goToWeather">
     <v-img
       src="../assets/hg-brasil-conditions-slugs/clear_day.svg"
       width="62"
@@ -11,7 +11,7 @@
 
   <v-divider vertical class="custom-divider" />
 
-  <v-btn stacked variant="text" class="custom-btn">
+  <v-btn stacked variant="text" class="custom-btn" @click="goToMoon">
     <v-img
       src="../assets/hg-brasil-moon-phases/full.png"
       width="62"
@@ -22,7 +22,19 @@
   </v-btn>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts" setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const goToWeather = () => {
+  router.push("/weather");
+};
+
+const goToMoon = () => {
+  router.push("/moon");
+};
+</script>
 
 <style>
 .custom-btn {
