@@ -9,5 +9,7 @@ const api = axios.create({
 });
 
 export const getWeather = (latitude, longitude) => {
-  return api.api.get(`/weather?key=${key}&lat=${latitude}&lon=${longitude}`);
+  return api.get(`/weather?key=${key}&lat=${latitude}&lon=${longitude}`);
 };
+
+console.log(getWeather);

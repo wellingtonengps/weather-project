@@ -15,9 +15,11 @@ onMounted(() => {
       (position) => {
         const { latitude, longitude } = position.coords;
 
-        getWeather(latitude, longitude)
+        this.weather = getWeather(latitude, longitude)
           .then((data) => (weather.value = data))
           .catch((error) => console.error("Erro ao buscar dados:", error));
+
+        console.log(weather);
       },
       (error) => {
         this.error = "Permissão de localização negada";
