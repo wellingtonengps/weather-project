@@ -1,5 +1,10 @@
 <template>
-  <h1>Weather</h1>
+  <div v-if="weather">
+    <h2>Clima: {{ weather.description }}</h2>
+    <p>Temperatura: {{ weather.temp }}°C</p>
+  </div>
+  <p v-else-if="error">{{ error }}</p>
+  <p v-else>Carregando...</p>
 </template>
 
 <script setup lang="ts">
@@ -16,16 +21,21 @@ onMounted(() => {
         const { latitude, longitude } = position.coords;
 
         getWeather(latitude, longitude)
-          .then((data) => (weather.value = data))
-          .catch((error) => console.error("Erro ao buscar dados:", error));
+          .then((response) => {
+            weather.value = response.data.results;
+          })
+          .catch((err) => {
+            error.value = "Erro ao buscar previsão do tempo";
+            console.error(err);
+          });
       },
-      (error) => {
-        this.error = "Permissão de localização negada";
-        console.error(error.message);
+      (err) => {
+        error.value = "Permissão de localização negada";
+        console.error(err.message);
       }
     );
   } else {
-    this.error = "Geolocalização não suportada pelo navegador";
+    error.value = "Geolocalização não suportada pelo navegador";
   }
 });
 </script>
