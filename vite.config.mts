@@ -64,6 +64,14 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    proxy: {
+      "/api/weather": {
+        target: "https://api.hgbrasil.com",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api\/weather/, "/weather"),
+      },
+    },
   },
   css: {
     preprocessorOptions: {
