@@ -34,19 +34,12 @@
     <div v-if="weather" class="forecast-container">
       <Card v-for="(day, index) in weather.forecast" :key="index" :data="day" />
     </div>
+
     <v-col v-else-if="error" class="d-flex justify-center align-center mt-4">
       <v-alert type="error" class="error-alert">
         {{ error }}
       </v-alert>
     </v-col>
-    <p v-else>
-      <DotLottieVue
-        style="height: 88px; width: 88px"
-        autoplay
-        loop
-        src="https://lottie.host/9a811fb4-c338-4380-8057-e0bf932ab293/Amy44xoGPm.lottie"
-      />
-    </p>
   </div>
 </template>
 
@@ -56,12 +49,11 @@ import { useRoute } from "vue-router";
 
 import { getWeather, getWeatherByCity } from "@/services/api.js";
 import Card from "@/components/Card.vue";
-import SearchCity from "./SearchCity.vue";
+import SearchCity from "@/components/SearchCity.vue";
 
 import type { WeatherResponse } from "@/types/weather";
 import type { WeatherQuery } from "@/types/query";
 
-import { DotLottieVue } from "@lottiefiles/dotlottie-vue";
 const route = useRoute();
 const weather = ref<WeatherResponse | null>(null);
 const error = ref<string | null>(null);
@@ -102,7 +94,13 @@ const conditionBackground = computed(() => {
     noite: "night-bg",
   };
 
-  return conditionColors[weather.value?.currently] || "default";
+  const currentCondition = weather.value?.currently;
+
+  if (currentCondition && conditionColors[currentCondition]) {
+    return conditionColors[currentCondition];
+  }
+
+  return "default";
 });
 </script>
 
@@ -145,7 +143,7 @@ const conditionBackground = computed(() => {
 }
 
 .default {
-  background: linear-gradient(135deg, #f1f1f1);
+  background-color: #596bab;
 }
 
 .forecast-container {
@@ -156,7 +154,7 @@ const conditionBackground = computed(() => {
   white-space: nowrap;
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
-  max-width: 100%;
+  max-width: 100vh;
 }
 
 .forecast-container::-webkit-scrollbar {

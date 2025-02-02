@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import SearchCity from "./SearchCity.vue";
+import SearchCity from "@/components/SearchCity.vue";
 import { useRouter } from "vue-router";
 import { DotLottieVue } from "@lottiefiles/dotlottie-vue";
 
@@ -63,7 +63,7 @@ function fetchWeatherByLocation() {
         });
       },
       (err) => {
-        error.value = "Permissão de localização negada. " + err;
+        error.value = "Permissão de localização negada. " + err.message;
       }
     );
   } else {

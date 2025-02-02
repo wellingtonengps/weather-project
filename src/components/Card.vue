@@ -4,20 +4,20 @@
     <h3>{{ data.description }}</h3>
 
     <div>
-      <v-col class="d-flex flex-column justify-space-between align-center">
+      <v-col class="d-flex flex-column justify-space-between align-center pa-0">
         <span class="minMax">{{ data.min }}/{{ data.max }} &deg;C</span>
         <v-img
           :src="`https://assets.hgbrasil.com/weather/icons/conditions/${data.condition}.svg`"
           contain
-          height="88"
-          width="88"
+          height="80"
+          width="80"
         />
       </v-col>
     </div>
 
     <v-divider />
 
-    <v-list class="bg-transparent">
+    <v-list class="bg-transparent pa-0">
       <div class="d-flex flex-column justify-space-between">
         <v-list-item density="compact" prepend-icon="mdi-weather-windy">
           <v-list-item-subtitle>{{ data.wind_speedy }}</v-list-item-subtitle>
@@ -61,121 +61,67 @@ const conditionBackground = computed(() => {
 
 <style scoped>
 .card {
-  padding: 18px;
+  padding: 12px 12px 0px 12px;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  min-width: 240px;
-  min-height: 340px;
+  min-width: 220px;
+  min-height: 220px;
   text-align: center;
 }
 
 .minMax {
-  font-size: 30px;
-  padding: 0px;
-  margin: 0px;
+  font-size: 22px;
 }
 
 .stormy-bg {
-  background: linear-gradient(
-    135deg,
-    #4a4a4a,
-    #000000
-  ); /* Cinza escuro para tempestade */
+  background: linear-gradient(135deg, #4a4a4a, #000000);
 }
 
 .snowy-bg {
-  background: linear-gradient(
-    135deg,
-    #d8efff,
-    #a6c5e8
-  ); /* Azul claro para neve */
+  background: linear-gradient(135deg, #d8efff, #a6c5e8);
 }
 
 .hail-bg {
-  background: linear-gradient(
-    135deg,
-    #a6c5e8,
-    #708090
-  ); /* Azul acinzentado para granizo */
+  background: linear-gradient(135deg, #a6c5e8, #708090);
 }
 
 .rainy-bg {
-  background: linear-gradient(
-    135deg,
-    #5f9ea0,
-    #4682b4
-  ); /* Azul esverdeado para chuva */
+  background: linear-gradient(135deg, #5f9ea0, #4682b4);
 }
 
 .foggy-bg {
-  background: linear-gradient(
-    135deg,
-    #c0c0c0,
-    #808080
-  ); /* Cinza para neblina */
+  background: linear-gradient(135deg, #c0c0c0, #808080);
 }
 
 .sunny-bg {
-  background: linear-gradient(
-    135deg,
-    #ffd700,
-    #ffa500
-  ); /* Amarelo para dia limpo */
+  background: linear-gradient(135deg, #ffd700, #ffa500);
 }
 
 .night-bg {
-  background: linear-gradient(
-    135deg,
-    #2c3e50,
-    #1a1a2e
-  ); /* Azul escuro para noite limpa */
+  background: linear-gradient(135deg, #2c3e50, #1a1a2e);
 }
 
 .cloudy-bg {
-  background: linear-gradient(
-    135deg,
-    #b0c4de,
-    #778899
-  ); /* Azul claro para nublado */
+  background: linear-gradient(135deg, #b0c4de, #778899);
 }
 
 .cloudy-day-bg {
-  background: linear-gradient(
-    135deg,
-    #d3d3d3,
-    #a9a9a9
-  ); /* Cinza claro para nublado de dia */
+  background: linear-gradient(135deg, #d3d3d3, #a9a9a9);
 }
 
 .cloudy-night-bg {
-  background: linear-gradient(
-    135deg,
-    #696969,
-    #2f4f4f
-  ); /* Cinza escuro para nublado de noite */
+  background: linear-gradient(135deg, #696969, #2f4f4f);
 }
 
 .error-day-bg {
-  background: linear-gradient(
-    135deg,
-    #ff8c00,
-    #ff4500
-  ); /* Laranja para erro de dia */
+  background: linear-gradient(135deg, #ff8c00, #ff4500);
 }
 
 .error-night-bg {
-  background: linear-gradient(
-    135deg,
-    #8b0000,
-    #4b0082
-  ); /* Vermelho escuro para erro de noite */
+  background: linear-gradient(135deg, #8b0000, #4b0082);
 }
 
 .default-bg {
-  background: linear-gradient(
-    135deg,
-    #ffffff,
-    #dddddd
-  ); /* Branco com cinza claro como padrão */
+  background: linear-gradient(135deg, #ffffff, #dddddd);
 }
 </style>

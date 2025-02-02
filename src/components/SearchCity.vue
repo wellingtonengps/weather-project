@@ -1,4 +1,3 @@
-<!-- src/components/SearchCity.vue -->
 <template>
   <v-row class="wrapper-search">
     <v-text-field
@@ -15,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 
 const cityInput = ref("");
 const emit = defineEmits(["search"]);
