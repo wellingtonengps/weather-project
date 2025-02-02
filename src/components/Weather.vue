@@ -1,18 +1,10 @@
 <template>
   <div class="container" :class="conditionBackground">
-    <div class="city-container" v-if="weather">
+    <div v-if="weather" class="city-container">
       <SearchCity @search="fetchWeatherByCity" />
 
       <h1>{{ weather.city }}</h1>
       <div class="wrapper-temp">
-        <!--
-       <DotLottieVue
-        style="height: 88px; width: 88px"
-        autoplay
-        loop
-        src="https://lottie.host/b919a743-a4e4-472a-9296-d2ff854dc7d8/nYNcPDwVCw.lottie"
-      />
-      -->
         <v-img
           :src="`https://assets.hgbrasil.com/weather/icons/conditions/${weather.condition_slug}.svg`"
           contain
@@ -38,10 +30,15 @@
         </v-list-item>
       </div>
     </div>
-    <div class="forecast-container" v-if="weather">
+
+    <div v-if="weather" class="forecast-container">
       <Card v-for="(day, index) in weather.forecast" :key="index" :data="day" />
     </div>
-    <p v-else-if="error">{{ error }}</p>
+    <v-col v-else-if="error" class="d-flex justify-center align-center mt-4">
+      <v-alert type="error" class="error-alert">
+        {{ error }}
+      </v-alert>
+    </v-col>
     <p v-else>
       <DotLottieVue
         style="height: 88px; width: 88px"
@@ -54,18 +51,20 @@
 </template>
 
 <script setup lang="ts">
-import Card from "./Card.vue";
 import { ref, onMounted, computed } from "vue";
-import { getWeather, getWeatherByCity } from "@/services/api.js";
-import type { WeatherResponse } from "@/types/weather";
 import { useRoute } from "vue-router";
+
+import { getWeather, getWeatherByCity } from "@/services/api.js";
+import Card from "@/components/Card.vue";
 import SearchCity from "./SearchCity.vue";
+
+import type { WeatherResponse } from "@/types/weather";
 import type { WeatherQuery } from "@/types/query";
 
 import { DotLottieVue } from "@lottiefiles/dotlottie-vue";
 const route = useRoute();
 const weather = ref<WeatherResponse | null>(null);
-const error = ref(null);
+const error = ref<string | null>(null);
 
 onMounted(() => {
   const params: WeatherQuery = route.query;
@@ -82,8 +81,7 @@ async function fetchWeatherByLocation(lat: number, lon: number) {
     weather.value = await getWeather(lat, lon);
     error.value = null;
   } catch (err) {
-    error.value = "Erro ao buscar previsão do tempo";
-    console.error(err);
+    error.value = "Erro ao buscar previsão do tempo. " + err;
   }
 }
 
@@ -93,7 +91,8 @@ async function fetchWeatherByCity(city: string) {
     weather.value = await getWeatherByCity(city);
     error.value = null;
   } catch (err) {
-    error.value = "Cidade não encontrada!";
+    error.value =
+      "Cidade não encontrada. Exemplo de pesquisa: Juiz de Fora, MG. " + err;
   }
 }
 
@@ -151,13 +150,13 @@ const conditionBackground = computed(() => {
 
 .forecast-container {
   display: flex;
-  overflow-x: auto; /* Somente rolagem horizontal */
+  overflow-x: auto;
   gap: 10px;
   padding: 10px;
   white-space: nowrap;
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
-  max-width: 100%; /* Limita o tamanho do container */
+  max-width: 100%;
 }
 
 .forecast-container::-webkit-scrollbar {

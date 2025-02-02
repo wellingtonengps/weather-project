@@ -30,7 +30,7 @@ function searchWeather() {
 <style scoped>
 .wrapper-search {
   display: grid;
-  grid-template-columns: auto min-content;
+  grid-template-columns: max-content min-content;
   gap: 2px;
   margin-left: 2px;
 }
