@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/api/(.*)",
+      "source": "https://api.hgbrasil.com",
       "headers": [
         {
           "key": "Access-Control-Allow-Credentials",
