@@ -1,0 +1,1 @@
+import e from"./view-DY_MU1sZ.js";import{d as t,o as a,c as o,w as r,a as p,V as s}from"./index-DuYwuGfd.js";import"./tag-BRRi4uD_.js";import"./ssrBoot-tGhvpp8t.js";const u=t({__name:"default",setup(c){return(n,m)=>(a(),o(s,null,{default:r(()=>[p(e)]),_:1}))}});export{u as default};
