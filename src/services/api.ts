@@ -26,7 +26,7 @@ export const getWeather = async (
 export const getWeatherByCity = async (
   city: string
 ): Promise<WeatherResponse> => {
-  const response = await axios.get("/api/weather", {
+  const response = await axios.get(baseURL, {
     params: {
       key,
       city_name: city,

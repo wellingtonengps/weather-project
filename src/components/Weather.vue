@@ -112,8 +112,7 @@ const conditionBackground = computed(() => {
   align-items: start;
   height: 100vh;
   width: 100vw;
-  padding: 20px;
-  box-sizing: border-box;
+  padding: 20px 0px 20px 20px;
 }
 
 .wrapper-search {
@@ -154,7 +153,7 @@ const conditionBackground = computed(() => {
   white-space: nowrap;
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
-  max-width: 100vh;
+  max-width: 100%;
 }
 
 .forecast-container::-webkit-scrollbar {
