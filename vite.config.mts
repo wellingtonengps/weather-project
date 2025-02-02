@@ -12,7 +12,7 @@ import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "node:url";
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   base: "/weather-project/",
   plugins: [
     VueRouter({
@@ -65,14 +65,16 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    proxy: {
-      "/api/weather": {
-        target: "https://api.hgbrasil.com",
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api\/weather/, "/weather"),
+    ...(mode === "development" && {
+      proxy: {
+        "/api/weather": {
+          target: "https://api.hgbrasil.com",
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api\/weather/, "/weather"),
+        },
       },
-    },
+    }),
   },
   css: {
     preprocessorOptions: {
@@ -81,4 +83,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));
