@@ -37,24 +37,20 @@ import { DotLottieVue } from "@lottiefiles/dotlottie-vue";
 
 const router = useRouter();
 
-const error = ref(null);
+const error = ref<string | null>(null);
 
-async function fetchWeatherByCity(city: string) {
+function fetchWeatherByCity(city: string) {
   if (!city) return;
-  try {
-    if (city) {
-      router.push({
-        path: "/weather",
-        query: { city },
-      });
-    }
-    error.value = null;
-  } catch (err) {
-    error.value = "Cidade não encontrada!";
+
+  if (city) {
+    router.push({
+      path: "/weather",
+      query: { city },
+    });
   }
 }
 
-async function fetchWeatherByLocation() {
+function fetchWeatherByLocation() {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -67,8 +63,7 @@ async function fetchWeatherByLocation() {
         });
       },
       (err) => {
-        error.value = "Permissão de localização negada";
-        console.error(err.message);
+        error.value = "Permissão de localização negada. " + err;
       }
     );
   } else {
