@@ -8,7 +8,7 @@ export const key = "f3cf07f7";
 const baseURL =
   import.meta.env.MODE === "development"
     ? "/api/weather" // Proxy em desenvolvimento
-    : "https://api.hgbrasil.com/weather"; // URL real em produção
+    : "http://api.hgbrasil.com/weather"; // URL real em produção
 
 console.log(baseURL);
 
