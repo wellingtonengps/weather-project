@@ -8,7 +8,7 @@ export const key = "f3cf07f7";
 const baseURL =
   import.meta.env.MODE === "development"
     ? "/api/weather" // Proxy em desenvolvimento
-    : "http://api.hgbrasil.com/weather"; // URL real em produção
+    : "https://api.hgbrasil.com/weather"; // URL real em produção
 
 console.log(baseURL);
 
@@ -21,7 +21,7 @@ export const getWeather = async (
   latitude: number,
   longitude: number
 ): Promise<WeatherResponse> => {
-  const response = await axios.get(baseURL, {
+  const response = await axios.get("/api/weather", {
     params: {
       key,
       lat: latitude,
@@ -36,7 +36,7 @@ export const getWeather = async (
 export const getWeatherByCity = async (
   city: string
 ): Promise<WeatherResponse> => {
-  const response = await axios.get(baseURL, {
+  const response = await axios.get("/api/weather", {
     params: {
       key,
       city_name: city,
