@@ -12,6 +12,7 @@ declare module 'vue' {
     Moon: typeof import('./components/Moon.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchCity: typeof import('./components/SearchCity.vue')['default']
     Weather: typeof import('./components/Weather.vue')['default']
   }
 }

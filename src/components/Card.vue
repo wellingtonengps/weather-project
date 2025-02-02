@@ -61,7 +61,7 @@ const conditionBackground = computed(() => {
 
 <style scoped>
 .card {
-  padding: 20px;
+  padding: 18px;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   min-width: 240px;

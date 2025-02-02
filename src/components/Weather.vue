@@ -1,6 +1,8 @@
 <template>
   <div class="container" :class="conditionBackground">
     <div class="city-container" v-if="weather">
+      <SearchCity @search="fetchWeatherByCity" />
+
       <h1>{{ weather.city }}</h1>
       <div class="wrapper-temp">
         <!--
@@ -40,45 +42,60 @@
       <Card v-for="(day, index) in weather.forecast" :key="index" :data="day" />
     </div>
     <p v-else-if="error">{{ error }}</p>
-    <p v-else>Carregando...</p>
+    <p v-else>
+      <DotLottieVue
+        style="height: 88px; width: 88px"
+        autoplay
+        loop
+        src="https://lottie.host/9a811fb4-c338-4380-8057-e0bf932ab293/Amy44xoGPm.lottie"
+      />
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
 import Card from "./Card.vue";
 import { ref, onMounted, computed } from "vue";
-import { getWeather } from "@/services/api.js";
+import { getWeather, getWeatherByCity } from "@/services/api.js";
 import type { WeatherResponse } from "@/types/weather";
-//import { DotLottieVue } from "@lottiefiles/dotlottie-vue";
+import { useRoute } from "vue-router";
+import SearchCity from "./SearchCity.vue";
+import type { WeatherQuery } from "@/types/query";
 
+import { DotLottieVue } from "@lottiefiles/dotlottie-vue";
+const route = useRoute();
 const weather = ref<WeatherResponse | null>(null);
 const error = ref(null);
 
 onMounted(() => {
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
+  const params: WeatherQuery = route.query;
 
-        getWeather(latitude, longitude)
-          .then((response: WeatherResponse) => {
-            weather.value = response;
-            console.log(response);
-          })
-          .catch((err) => {
-            error.value = "Erro ao buscar previsão do tempo";
-            console.error(err);
-          });
-      },
-      (err) => {
-        error.value = "Permissão de localização negada";
-        console.error(err.message);
-      }
-    );
-  } else {
-    error.value = "Geolocalização não suportada pelo navegador";
+  if (params.city) {
+    fetchWeatherByCity(params.city);
   }
+
+  if (params.lat && params.log) fetchWeatherByLocation(params.lat, params.log);
 });
+
+async function fetchWeatherByLocation(lat: number, lon: number) {
+  try {
+    weather.value = await getWeather(lat, lon);
+    error.value = null;
+  } catch (err) {
+    error.value = "Erro ao buscar previsão do tempo";
+    console.error(err);
+  }
+}
+
+async function fetchWeatherByCity(city: string) {
+  if (!city) return;
+  try {
+    weather.value = await getWeatherByCity(city);
+    error.value = null;
+  } catch (err) {
+    error.value = "Cidade não encontrada!";
+  }
+}
 
 const conditionBackground = computed(() => {
   const conditionColors: Record<string, string> = {
@@ -102,6 +119,13 @@ const conditionBackground = computed(() => {
   box-sizing: border-box;
 }
 
+.wrapper-search {
+  display: grid;
+  grid-template-columns: auto min-content;
+  gap: 2px;
+  margin-left: 2px;
+}
+
 .wrapper-temp {
   display: grid;
   grid-template-columns: auto auto;
@@ -109,31 +133,20 @@ const conditionBackground = computed(() => {
 }
 
 .city-container {
+  margin-top: 30px;
   margin-left: 10px;
 }
 
 .night-bg {
-  background: linear-gradient(
-    135deg,
-    #6a1b9a,
-    /* Roxo escuro */ #8e24aa /* Lilás escuro */
-  ); /* Roxo e lilás para noite */
+  background: linear-gradient(135deg, #4a0072, #311b92);
 }
 
 .day-bg {
-  background: linear-gradient(
-    135deg,
-    #f4a300,
-    /* Amarelo mais escuro */ #ff7f32 /* Laranja mais escuro */
-  ); /* Amarelo e laranja mais escuros para dia limpo */
+  background: linear-gradient(135deg, #f4a300, #ff7f32);
 }
 
 .default {
-  background: linear-gradient(
-    135deg,
-    #4a4a4a,
-    #000000
-  ); /* Cinza escuro para tempestade */
+  background: linear-gradient(135deg, #f1f1f1);
 }
 
 .forecast-container {

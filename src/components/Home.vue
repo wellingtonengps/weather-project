@@ -1,53 +1,66 @@
 <template>
-  <v-btn stacked variant="text" class="custom-btn" @click="goToWeather">
-    <v-img
-      src="../assets/hg-brasil-conditions-slugs/clear_day.svg"
-      width="62"
-      height="62"
-      class="icon"
-    />
-    <span>Clima</span>
-  </v-btn>
-
-  <v-divider vertical class="custom-divider" />
-
-  <v-btn stacked variant="text" class="custom-btn" @click="goToMoon">
-    <v-img
-      src="../assets/hg-brasil-moon-phases/full.png"
-      width="62"
-      height="62"
-      class="icon"
-    />
-    <span>Fases da Lua</span>
-  </v-btn>
+  <div class="container">
+    <SearchCity @search="fetchWeatherByCity" />
+    <v-btn height="56" class="ml-2" color="red" @click="fetchWeatherByLocation">
+      <v-icon size="22">mdi-map-marker</v-icon>
+      Usar localização
+    </v-btn>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import { ref } from "vue";
+import SearchCity from "./SearchCity.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const goToWeather = () => {
-  router.push("/weather");
-};
+const error = ref(null);
 
-const goToMoon = () => {
-  router.push("/moon");
-};
-</script>
-
-<style>
-.custom-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-transform: none;
-  height: 200px;
-  width: 200px;
+async function fetchWeatherByCity(city: string) {
+  if (!city) return;
+  try {
+    if (city) {
+      router.push({
+        path: "/weather",
+        query: { city },
+      });
+    }
+    error.value = null;
+  } catch (err) {
+    error.value = "Cidade não encontrada!";
+  }
 }
 
-.icon {
-  margin-bottom: 8px;
+async function fetchWeatherByLocation() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        router.push({
+          path: "/weather",
+          query: {
+            lat: position.coords.latitude,
+            log: position.coords.longitude,
+          },
+        });
+      },
+      (err) => {
+        error.value = "Permissão de localização negada";
+        console.error(err.message);
+      }
+    );
+  } else {
+    error.value = "Geolocalização não suportada pelo navegador";
+  }
+}
+</script>
+
+<style scoped>
+.container {
+  display: flex;
+  width: 100vw;
+  padding: 20px;
+  height: 100vh;
+  background-color: #000;
 }
 </style>

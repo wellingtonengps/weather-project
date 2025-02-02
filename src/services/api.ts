@@ -20,3 +20,20 @@ export const getWeather = async (
 
   return response.data.results;
 };
+
+export const getWeatherByCity = async (
+  city: string
+): Promise<WeatherResponse> => {
+  const response = await axios.get("/api/weather", {
+    params: {
+      key,
+      city_name: city,
+    },
+  });
+
+  if (response.data.by === "default") {
+    throw new Error("Cidade não encontrada");
+  }
+
+  return response.data.results;
+};
