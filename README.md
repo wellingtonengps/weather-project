@@ -13,6 +13,10 @@ Esta é uma aplicação web de previsão do tempo desenvolvida com **Vue.js**, *
 - **TypeScript** - Superset do JavaScript para tipagem estática
 - **Vercel** - Hospedagem da aplicação
 
+## Screenshots
+
+![Frame 1](https://i.ibb.co/tpQQnZ23/Design-sem-nome.png)
+
 ## Funcionalidades
 
 - **Pesquisa por cidade**: Informe uma cidade no formato "Juiz de Fora, MG" para obter a previsão do tempo.
